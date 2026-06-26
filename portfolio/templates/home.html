@@ -1,0 +1,877 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joan Atimango | Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght=300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary: #0F766E;
+            --secondary: #14B8A6;
+            --background: #F8FAFC;
+            --dark: #0F172A;
+            --gray: #64748B;
+            --light-card: #FFFFFF;
+            --border-color: #E2E8F0;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Fixed Navigation Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(248, 250, 252, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 10%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--dark);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Base Section Layout */
+        section {
+            padding: 120px 10% 100px 10%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 36px;
+            color: var(--dark);
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            font-size: 14px;
+            color: var(--gray);
+            margin-top: 5px;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .hero-left-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .socials {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .socials a {
+            font-size: 24px;
+            color: var(--primary);
+            transition: transform 0.3s, color 0.3s;
+        }
+
+        .socials a:hover {
+            color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .hero-content {
+            max-width: 550px;
+        }
+
+        .hero-content h1 {
+            font-size: 56px;
+            font-weight: 700;
+            color: var(--dark);
+            line-height: 1.1;
+        }
+
+        .hero-content h1 span {
+            color: var(--primary);
+        }
+
+        .hero-content h3 {
+            margin-top: 15px;
+            font-size: 22px;
+            font-weight: 500;
+            color: var(--gray);
+        }
+
+        .hero-content p {
+            margin-top: 20px;
+            line-height: 1.7;
+            color: var(--gray);
+            font-size: 15px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 35px;
+            text-decoration: none;
+            background: var(--primary);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        /* Profile Image Container */
+        .hero-image-container {
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 380px;
+            height: 380px;
+            object-fit: cover;
+            background: var(--primary);
+            border-radius: 55% 45% 42% 58% / 58% 44% 56% 42%;
+            animation: profile_blob 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes profile_blob {
+            0% { border-radius: 55% 45% 42% 58% / 58% 44% 56% 42%; }
+            100% { border-radius: 45% 55% 58% 42% / 42% 56% 44% 58%; }
+        }
+
+        /* --- ABOUT SECTION --- */
+        .about-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 80px;
+            margin-top: 20px;
+        }
+
+        .about-img-wrapper {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            background: var(--primary);
+            padding: 6px;
+            display: inline-block;
+        }
+
+        .about-img-wrapper img {
+            width: 280px;
+            height: 320px;
+            object-fit: cover;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            background: var(--background);
+            display: block;
+        }
+
+        .about-text {
+            max-width: 550px;
+        }
+
+        .about-text p {
+            color: var(--gray);
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        /* --- SKILLS SECTION --- */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .skill-card {
+            background: var(--light-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 35px 25px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(15, 118, 110, 0.05);
+        }
+
+        .skill-icon {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .skill-card h4 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .skill-card p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* --- QUALIFICATIONS SECTION --- */
+        .timeline-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--gray);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .timeline-container {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--primary);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -29px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 2px solid var(--background);
+        }
+
+        .timeline-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .timeline-subtitle {
+            font-size: 14px;
+            color: var(--gray);
+            margin: 2px 0 8px 0;
+        }
+
+        .timeline-date {
+            font-size: 13px;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* --- PROJECTS LAYOUT --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .project-card {
+            background: var(--light-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(15, 118, 110, 0.06);
+        }
+
+        .project-content h4 {
+            font-size: 20px;
+            color: var(--dark);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .project-content p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            font-size: 11px;
+            font-weight: 600;
+            background: rgba(20, 184, 166, 0.1);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .project-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .project-link-text {
+            font-size: 13px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.2s;
+        }
+
+        .project-link-text:hover {
+            color: var(--secondary);
+        }
+
+        /* --- CONTACT SECTION & ALERTS --- */
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+            align-items: start;
+            margin-top: 20px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .contact-icon {
+            font-size: 24px;
+            color: var(--primary);
+        }
+
+        .contact-text h4 {
+            font-size: 16px;
+            color: var(--dark);
+        }
+
+        .contact-text p {
+            font-size: 14px;
+            color: var(--gray);
+            margin-top: 2px;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group input, 
+        .form-group textarea {
+            width: 100%;
+            padding: 16px;
+            background: var(--light-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+            color: var(--dark);
+            transition: border-color 0.3s;
+        }
+
+        .form-group label {
+            position: absolute;
+            left: 16px;
+            top: -10px;
+            background: var(--background);
+            padding: 0 6px;
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .form-group input:focus, 
+        .form-group textarea:focus {
+            border-color: var(--primary);
+        }
+
+        .form-group textarea {
+            height: 160px;
+            resize: none;
+        }
+
+        /* Message Notification Alerts CSS styling */
+        .alert-msg {
+            padding: 14px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            line-height: 1.4;
+        }
+        .alert-success {
+            background-color: #DCFCE7;
+            color: #15803D;
+            border: 1px solid #BBF7D0;
+        }
+        .alert-error {
+            background-color: #FEE2E2;
+            color: #B91C1C;
+            border: 1px solid #FCA5A5;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 60px 10% 30px 10%;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 40px;
+        }
+
+        .footer-logo h2 {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .footer-logo p {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-socials a {
+            color: white;
+            font-size: 20px;
+            opacity: 0.8;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .footer-socials a:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        .footer-copy {
+            text-align: center;
+            font-size: 12px;
+            opacity: 0.6;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    
+<header>
+    <nav class="navbar">
+        <a href="#home" class="logo">Joan Atimango</a>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#qualifications">Qualifications</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section id="home" class="hero">
+    <div class="hero-left-wrapper">
+        <div class="socials">
+            <a href="https://www.linkedin.com/in/atimango-joan-826575270" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/Aribe-24" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://medium.com/@atimangojoan85" target="_blank"><i class="fab fa-medium"></i></a>
+            <a href="https://x.com/atimango_joan" target="_blank"><i class="fab fa-twitter"></i></a>
+        </div>
+
+        <div class="hero-content">
+            <h1>Hi, I'm <span>Joan</span></h1>
+            <h3>Software & AI Engineer</h3>
+            <p>
+                I am deeply passionate about building smart software and am focused on launching my career in software and artificial intelligence. 
+                After gaining practical skills through a Software Engineering certificate at Refactory Academy, I am now growing my knowledge in AI systems at Turing College. 
+                I love coding with Python and Django, learning how AI works behind the scenes, and creating real-world tools that make a difference.
+            </p>
+            <a href="#contact" class="btn">Contact Me <i class="fa-solid fa-paper-plane"></i></a>
+        </div>
+    </div>
+
+    <div class="hero-image-container">
+        <div class="hero-image">
+            <img src="{% static 'portfolio/profile.jpeg' %}" alt="Joan">
+        </div>
+    </div>
+</section>
+
+<section id="about">
+    <div class="section-header">
+        <h2 class="section-title">About Me</h2>
+        <span class="section-subtitle">My Introduction</span>
+    </div>
+    <div class="about-container">
+        <div class="about-img-wrapper">
+            <img src="{% static 'portfolio/profile.jpeg' %}" alt="Joan About">
+        </div>
+        <div class="about-text">
+            <p>
+                I bring an analytical and problem-solving mindset to software engineering. My technical path began with building web applications using Python, and I am continuing to learn more about how machine learning and modern AI tools work.
+            </p>
+            <p>
+                I enjoy bridging the gap between clear project requirements and working, reliable code. I love turning data and logic into helpful features for software systems.
+            </p>
+            <a href="{% static 'portfolio/cv.pdf' %}" class="btn" download="Joan_Atimango_CV.pdf">Download CV <i class="fa-solid fa-download"></i></a>
+        </div>
+    </div>
+</section>
+
+<section id="skills">
+    <div class="section-header">
+        <h2 class="section-title">Skills</h2>
+        <span class="section-subtitle">My Technical Knowledge</span>
+    </div>
+    <div class="skills-grid">
+        <div class="skill-card">
+            <i class="fa-solid fa-code skill-icon"></i>
+            <h4>Core Backend</h4>
+            <p>Python, Django Framework, Database Architecture & SQL implementations.</p>
+        </div>
+        <div class="skill-card">
+            <i class="fa-solid fa-brain skill-icon"></i>
+            <h4>AI & Systems</h4>
+            <p> Machine Learning, RAG, Embeddings, Prompt Engineering, AI Agents </p>
+        </div>
+        <div class="skill-card">
+            <i class="fa-solid fa-layer-group skill-icon"></i>
+            <h4>Web Technologies</h4>
+            <p>HTML5, CSS3, Responsive layouts, and code version control using Git and GitHub.</p>
+        </div>
+    </div>
+</section>
+
+<section id="qualifications">
+    <div class="section-header">
+        <h2 class="section-title">Qualifications</h2>
+        <span class="section-subtitle">My Personal Journey</span>
+    </div>
+    <div class="timeline-tabs">
+        <div class="tab-btn active"><i class="fa-solid fa-graduation-cap"></i> Education</div>
+    </div>
+    <div class="timeline-container">
+        <div class="timeline-item">
+            <h4 class="timeline-title">Software & AI Engineering Academy</h4>
+            <p class="timeline-subtitle">Turing College</p>
+            <div class="timeline-date"><i class="fa-regular fa-calendar"></i> Current</div>
+        </div>
+        <div class="timeline-item">
+            <h4 class="timeline-title">Certificate in Software Engineering (Python)</h4>
+            <p class="timeline-subtitle">Refactory Academy</p>
+            <div class="timeline-date"><i class="fa-regular fa-calendar"></i> Completed 2026</div>
+        </div>
+        <div class="timeline-item">
+            <h4 class="timeline-title">Bachelor of Business Administration</h4>
+            <p class="timeline-subtitle">Makerere University</p>
+            <div class="timeline-date"><i class="fa-regular fa-calendar"></i> Concluded</div>
+        </div>
+    </div>
+</section>
+
+<section id="projects">
+    <div class="section-header">
+        <h2 class="section-title">Projects</h2>
+        <span class="section-subtitle">Most Recent Projects</span>
+    </div>
+    <div class="projects-grid">
+        <div class="project-card">
+            <div class="project-content">
+                <h4><i class="fa-solid fa-warehouse" style="color: var(--primary);"></i> Nyondo Hardware System</h4>
+                <p>A web inventory management platform built with Python and Django to handle stock tracking, supplier credits, and database updates.</p>
+                <div class="project-tags">
+                    <span class="tag">Django</span>
+                    <span class="tag">Python</span>
+                    <span class="tag">SQL</span>
+                </div>
+            </div>
+            <div class="project-footer">
+                <a href="https://github.com/Aribe-24/NYONDO-hardwareproject" target="_blank" class="project-link-text">
+                    View Source <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-content">
+                <h4><i class="fa-solid fa-chart-simple" style="color: var(--primary);"></i> Videx Dashboard</h4>
+                <p>A media-focused dashboard platform feature layout layout with a responsive project gallery and clean navigation sections.</p>
+                <div class="project-tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">Django MVT</span>
+                    <span class="tag">CSS Grid</span>
+                </div>
+            </div>
+            <div class="project-footer">
+                <a href="https://github.com/Aribe-24" target="_blank" class="project-link-text">
+                    View Source <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-content">
+                <h4><i class="fa-solid fa-gavel" style="color: var(--primary);"></i> Be Her</h4>
+                <p>Youth Leadership Website built with an optimized, accessible UI with intuitive navigation tracking for mentorship and leadership programs.</p>
+                <div class="project-tags">
+                    <span class="tag">HTML5</span>
+                    <span class="tag">CSS3</span>
+                    <span class="tag">UI/UX</span>
+                </div>
+            </div>
+            <div class="project-footer">
+                <a href="https://github.com/Aribe-24/Beginning-of-my-journey" target="_blank" class="project-link-text">
+                    View Source <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-content">
+                <h4><i class="fa-solid fa-user-gear" style="color: var(--primary);"></i> Personal Portfolio</h4>
+                <p>A responsive developer portfolio website designed to showcase professional engineering frameworks, projects, and active milestones.</p>
+                <div class="project-tags">
+                    <span class="tag">Django Templates</span>
+                    <span class="tag">Static Files</span>
+                    <span class="tag">CSS variables</span>
+                </div>
+            </div>
+            <div class="project-footer">
+                <a href="https://github.com/Aribe-24" target="_blank" class="project-link-text">
+                    View Source <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="section-header">
+        <h2 class="section-title">Contact Me</h2>
+        <span class="section-subtitle">Get In Touch</span>
+    </div>
+    <div class="contact-wrapper">
+        <div class="contact-info">
+            <div class="contact-item">
+                <i class="fa-solid fa-envelope contact-icon"></i>
+                <div class="contact-text">
+                    <h4>Email</h4>
+                    <p>atimangojoan85@gmail.com</p>
+                </div>
+            </div>
+            <div class="contact-item">
+                <i class="fa-solid fa-location-dot contact-icon"></i>
+                <div class="contact-text">
+                    <h4>Location</h4>
+                    <p>Kampala, Uganda</p>
+                </div>
+            </div>
+        </div>
+
+        <form class="contact-form" action="" method="POST">
+            {% csrf_token %}
+            
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert-msg {% if message.tags == 'success' %}alert-success{% else %}alert-error{% endif %}">
+                        {% if message.tags == 'success' %}
+                            <i class="fa-solid fa-circle-check"></i>
+                        {% else %}
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                        {% endif %}
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="form-group">
+                <input type="text" name="name" id="name" required placeholder="Enter your name">
+                <label for="name">Name</label>
+            </div>
+            <div class="form-group">
+                <input type="email" name="email" id="email" required placeholder="Enter your email">
+                <label for="email">Mail</label>
+            </div>
+            <div class="form-group">
+                <textarea name="message" id="message" required placeholder="Enter your message"></textarea>
+                <label for="message">Message</label>
+            </div>
+            <button type="submit" class="btn" style="border:none; cursor:pointer; width:fit-content;">
+                Send Message <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </form>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-logo">
+            <h2>Joan Atimango</h2>
+            <p>Software & AI Engineer</p>
+        </div>
+        <div class="footer-socials">
+            <a href="https://x.com/atimango_joan" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://medium.com/@atimangojoan85" target="_blank"><i class="fab fa-medium"></i></a>
+            <a href="https://github.com/Aribe-24" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+    </div>
+    <p class="footer-copy">&copy; joanatimango. All rights reserved</p>
+</footer>
+
+</body>
+</html>
