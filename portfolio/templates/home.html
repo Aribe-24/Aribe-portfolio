@@ -211,10 +211,16 @@
         /* --- ABOUT SECTION --- */
         .about-container {
             display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        .about-top-row {
+            display: flex;
             align-items: center;
             justify-content: center;
             gap: 80px;
-            margin-top: 20px;
         }
 
         .about-img-wrapper {
@@ -222,6 +228,7 @@
             background: var(--primary);
             padding: 6px;
             display: inline-block;
+            flex-shrink: 0;
         }
 
         .about-img-wrapper img {
@@ -234,14 +241,82 @@
         }
 
         .about-text {
-            max-width: 550px;
+            max-width: 650px;
         }
 
         .about-text p {
             color: var(--gray);
             font-size: 15px;
             line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        /* Option A - Capability Cards */
+        .capabilities-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-top: 20px;
             margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        .capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .cap-card {
+            background: var(--light-card);
+            border: 1px solid var(--border-color);
+            padding: 22px;
+            border-radius: 10px;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .cap-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--secondary);
+        }
+
+        .cap-icon {
+            font-size: 20px;
+            color: var(--primary);
+            background: rgba(15, 118, 110, 0.08);
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .cap-info h5 {
+            font-size: 15px;
+            color: var(--dark);
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .cap-info p {
+            font-size: 13px;
+            color: var(--gray);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .about-action {
+            text-align: center;
+            margin-top: 20px;
         }
 
         /* --- SKILLS SECTION --- */
@@ -452,107 +527,128 @@
             color: var(--secondary);
         }
 
-        /* --- CONTACT SECTION & ALERTS --- */
-        .contact-wrapper {
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 60px;
-            align-items: start;
-            margin-top: 20px;
+        /* --- CONTACT SECTION --- */
+        .contact-container {
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto;
         }
 
-        .contact-info {
+        .contact-info-list {
             display: flex;
             flex-direction: column;
-            gap: 40px;
+            gap: 20px;
         }
 
-        .contact-item {
+        .contact-card {
             display: flex;
             align-items: center;
-            gap: 20px;
-        }
-
-        .contact-icon {
-            font-size: 24px;
-            color: var(--primary);
-        }
-
-        .contact-text h4 {
-            font-size: 16px;
-            color: var(--dark);
-        }
-
-        .contact-text p {
-            font-size: 14px;
-            color: var(--gray);
-            margin-top: 2px;
-        }
-
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .form-group {
-            position: relative;
-        }
-
-        .form-group input, 
-        .form-group textarea {
-            width: 100%;
-            padding: 16px;
+            gap: 25px;
             background: var(--light-card);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            outline: none;
-            font-size: 14px;
-            color: var(--dark);
-            transition: border-color 0.3s;
+            padding: 25px 30px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
         }
 
-        .form-group label {
-            position: absolute;
-            left: 16px;
-            top: -10px;
-            background: var(--background);
-            padding: 0 6px;
-            font-size: 12px;
-            color: var(--gray);
-        }
-
-        .form-group input:focus, 
-        .form-group textarea:focus {
+        .contact-card[href]:hover {
+            transform: translateY(-3px);
             border-color: var(--primary);
+            box-shadow: 0 10px 20px rgba(15, 118, 110, 0.05);
         }
 
-        .form-group textarea {
-            height: 160px;
-            resize: none;
-        }
-
-        /* Message Notification Alerts CSS styling */
-        .alert-msg {
-            padding: 14px 18px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 20px;
+        .contact-card-icon {
+            font-size: 26px;
+            color: var(--primary);
+            background: rgba(15, 118, 110, 0.08);
+            width: 60px;
+            height: 60px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            line-height: 1.4;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s, color 0.3s;
+            flex-shrink: 0;
         }
-        .alert-success {
-            background-color: #DCFCE7;
-            color: #15803D;
-            border: 1px solid #BBF7D0;
+
+        .contact-card[href]:hover .contact-card-icon {
+            background: var(--primary);
+            color: white;
         }
-        .alert-error {
-            background-color: #FEE2E2;
-            color: #B91C1C;
-            border: 1px solid #FCA5A5;
+
+        .contact-card-text h4 {
+            font-size: 16px;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .contact-card-text p {
+            font-size: 15px;
+            color: var(--gray);
+            margin-top: 3px;
+            word-break: break-all;
+        }
+
+        /* --- GLOBAL MEDIA QUERIES --- */
+        @media (max-width: 992px) {
+            .navbar {
+                padding: 20px 5%;
+            }
+            section {
+                padding: 100px 5% 80px 5%;
+            }
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+                gap: 50px;
+                justify-content: center;
+            }
+            .hero-left-wrapper {
+                flex-direction: column;
+                gap: 30px;
+            }
+            .socials {
+                flex-direction: row;
+                justify-content: center;
+                gap: 30px;
+            }
+            .about-top-row {
+                flex-direction: column;
+                gap: 40px;
+            }
+            .capabilities-grid {
+                grid-template-columns: 1fr;
+            }
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hero-image img {
+                width: 290px;
+                height: 290px;
+            }
+            .hero-content h1 {
+                font-size: 40px;
+            }
+            .contact-card {
+                padding: 20px;
+                gap: 15px;
+            }
+            .contact-card-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
         }
 
         /* --- FOOTER --- */
@@ -652,26 +748,61 @@
     </div>
 </section>
 
+<!-- --- START ABOUT SECTION (OPTION A: GRID CARDS) --- -->
 <section id="about">
     <div class="section-header">
         <h2 class="section-title">About Me</h2>
-        <span class="section-subtitle">My Introduction</span>
+        <span class="section-subtitle">My Introduction & Core Capabilities</span>
     </div>
     <div class="about-container">
-        <div class="about-img-wrapper">
-            <img src="{% static 'portfolio/profile.jpeg' %}" alt="Joan About">
+        <div class="about-top-row">
+            <div class="about-img-wrapper">
+                <img src="{% static 'portfolio/profile.jpeg' %}" alt="Joan About">
+            </div>
+            <div class="about-text">
+                <p>
+                    I bring an analytical, logic-driven approach to engineering. My journey started by mastering backend architectures with Python, and I have since expanded into designing context-aware systems, automated workflows, and smart interfaces.
+                </p>
+                <p>
+                    I love turning project requirements into highly maintainable, scalable software. Whether setting up complex database operations or integrating AI grounding frameworks, I focus on engineering clean solutions that solve concrete tasks.
+                </p>
+            </div>
         </div>
-        <div class="about-text">
-            <p>
-                I bring an analytical and problem-solving mindset to software engineering. My technical path began with building web applications using Python, and I am continuing to learn more about how machine learning and modern AI tools work.
-            </p>
-            <p>
-                I enjoy bridging the gap between clear project requirements and working, reliable code. I love turning data and logic into helpful features for software systems.
-            </p>
+
+        <h3 class="capabilities-title">What I Can Do</h3>
+
+        <div class="capabilities-grid">
+            <div class="cap-card">
+                <div class="cap-icon"><i class="fa-solid fa-server"></i></div>
+                <div class="cap-info">
+                    <h5>Backend & Business Logic</h5>
+                    <p>Develop complete web applications using Python and Django, handling secure backend views, forms validation, and system routing.</p>
+                </div>
+            </div>
+
+            <div class="cap-card">
+                <div class="cap-icon"><i class="fa-solid fa-microchip"></i></div>
+                <div class="cap-info">
+                    <h5>AI Engineering & Synthesis</h5>
+                    <p>Implement context-rich solutions utilizing LLMs, customized text embeddings, prompt architecture, and information retrieval pipelines.</p>
+                </div>
+            </div>
+
+            <div class="cap-card">
+                <div class="cap-icon"><i class="fa-solid fa-border-all"></i></div>
+                <div class="cap-info">
+                    <h5>Responsive Layout Design</h5>
+                    <p>Build accessible, dynamic frontends featuring custom CSS layouts, seamless component structures, and native Django template routing.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="about-action">
             <a href="{% static 'portfolio/cv.pdf' %}" class="btn" download="Joan_Atimango_CV.pdf">Download CV <i class="fa-solid fa-download"></i></a>
         </div>
     </div>
 </section>
+<!-- --- END ABOUT SECTION --- -->
 
 <section id="skills">
     <div class="section-header">
@@ -709,17 +840,17 @@
         <div class="timeline-item">
             <h4 class="timeline-title">Software & AI Engineering Academy</h4>
             <p class="timeline-subtitle">Turing College</p>
-            <div class="timeline-date"><i class="fa-regular fa-calendar"></i> Current</div>
+            <div class="timeline-date"><i class="fa-regular fa-calendar"></i> June 2026 - Present</div>
         </div>
         <div class="timeline-item">
             <h4 class="timeline-title">Certificate in Software Engineering (Python)</h4>
             <p class="timeline-subtitle">Refactory Academy</p>
-            <div class="timeline-date"><i class="fa-regular fa-calendar"></i> Completed 2026</div>
+            <div class="timeline-date"><i class="fa-regular fa-calendar"></i> January 2026 - June 2026</div>
         </div>
         <div class="timeline-item">
             <h4 class="timeline-title">Bachelor of Business Administration</h4>
             <p class="timeline-subtitle">Makerere University</p>
-            <div class="timeline-date"><i class="fa-regular fa-calendar"></i> Concluded</div>
+            <div class="timeline-date"><i class="fa-regular fa-calendar"></i> Graduated 2025</div>
         </div>
     </div>
 </section>
@@ -742,23 +873,6 @@
             </div>
             <div class="project-footer">
                 <a href="https://github.com/Aribe-24/NYONDO-hardwareproject" target="_blank" class="project-link-text">
-                    View Source <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                </a>
-            </div>
-        </div>
-
-        <div class="project-card">
-            <div class="project-content">
-                <h4><i class="fa-solid fa-chart-simple" style="color: var(--primary);"></i> Videx Dashboard</h4>
-                <p>A media-focused dashboard platform feature layout layout with a responsive project gallery and clean navigation sections.</p>
-                <div class="project-tags">
-                    <span class="tag">Python</span>
-                    <span class="tag">Django MVT</span>
-                    <span class="tag">CSS Grid</span>
-                </div>
-            </div>
-            <div class="project-footer">
-                <a href="https://github.com/Aribe-24" target="_blank" class="project-link-text">
                     View Source <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 </a>
             </div>
@@ -792,7 +906,7 @@
                 </div>
             </div>
             <div class="project-footer">
-                <a href="https://github.com/Aribe-24" target="_blank" class="project-link-text">
+                <a href="https://github.com/Aribe-24/Aribe-portfolio" target="_blank" class="project-link-text">
                     View Source <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 </a>
             </div>
@@ -805,56 +919,40 @@
         <h2 class="section-title">Contact Me</h2>
         <span class="section-subtitle">Get In Touch</span>
     </div>
-    <div class="contact-wrapper">
-        <div class="contact-info">
-            <div class="contact-item">
-                <i class="fa-solid fa-envelope contact-icon"></i>
-                <div class="contact-text">
+    <div class="contact-container">
+        <div class="contact-info-list">
+            
+            <a href="mailto:atimangojoan85@gmail.com" class="contact-card">
+                <div class="contact-card-icon">
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+                <div class="contact-card-text">
                     <h4>Email</h4>
                     <p>atimangojoan85@gmail.com</p>
                 </div>
-            </div>
-            <div class="contact-item">
-                <i class="fa-solid fa-location-dot contact-icon"></i>
-                <div class="contact-text">
+            </a>
+
+            <a href="tel:+256783404315" class="contact-card">
+                <div class="contact-card-icon">
+                    <i class="fa-solid fa-phone"></i>
+                </div>
+                <div class="contact-card-text">
+                    <h4>Phone</h4>
+                    <p>+256 783404315</p>
+                </div>
+            </a>
+
+            <div class="contact-card">
+                <div class="contact-card-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div class="contact-card-text">
                     <h4>Location</h4>
                     <p>Kampala, Uganda</p>
                 </div>
             </div>
+
         </div>
-
-        <form class="contact-form" action="" method="POST">
-            {% csrf_token %}
-            
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert-msg {% if message.tags == 'success' %}alert-success{% else %}alert-error{% endif %}">
-                        {% if message.tags == 'success' %}
-                            <i class="fa-solid fa-circle-check"></i>
-                        {% else %}
-                            <i class="fa-solid fa-circle-exclamation"></i>
-                        {% endif %}
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-
-            <div class="form-group">
-                <input type="text" name="name" id="name" required placeholder="Enter your name">
-                <label for="name">Name</label>
-            </div>
-            <div class="form-group">
-                <input type="email" name="email" id="email" required placeholder="Enter your email">
-                <label for="email">Mail</label>
-            </div>
-            <div class="form-group">
-                <textarea name="message" id="message" required placeholder="Enter your message"></textarea>
-                <label for="message">Message</label>
-            </div>
-            <button type="submit" class="btn" style="border:none; cursor:pointer; width:fit-content;">
-                Send Message <i class="fa-solid fa-paper-plane"></i>
-            </button>
-        </form>
     </div>
 </section>
 
