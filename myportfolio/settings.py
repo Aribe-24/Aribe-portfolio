@@ -18,19 +18,28 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
+# --- Environment ---------------------------------------------------------
+# Render sets a RENDER environment variable, so we can tell live from local.
+IS_RENDER = 'RENDER' in os.environ
+
+# Debug is on locally and off on Render.
+DEBUG = not IS_RENDER
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get(
-    'SECRET_KEY',
-    'django-insecure-z&8j9a3rgi+0ptxayyp0i+@=_xpq%900&#99xkokobcd%w498^'
-)
+# On Render, set SECRET_KEY under Environment variables.
+SECRET_KEY = os.environ.get('SECRET_KEY')
+if not SECRET_KEY:
+    if DEBUG:
+        SECRET_KEY = 'dev-only-insecure-key'
+    else:
+        raise RuntimeError('Set the SECRET_KEY environment variable on Render.')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'True') == 'True'
-
-ALLOWED_HOSTS = ['*']  # tighten to your Railway domain once it's live
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+RENDER_HOST = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_HOST:
+    ALLOWED_HOSTS.append(RENDER_HOST)
+# If you add a custom domain later, append it here, for example:
+# ALLOWED_HOSTS.append('www.yourdomain.com')
 
 
 # Application definition
@@ -122,7 +131,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# STATICFILES_STORAGE was removed in Django 5.1. Use STORAGES instead.
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+    },
+}
 
 
 # Default primary key field type
