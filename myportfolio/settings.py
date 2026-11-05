@@ -147,3 +147,32 @@ STORAGES = {
 # https://docs.djangoproject.com/en/6.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+import os
+
+# Development: emails print in the terminal running runserver
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = "Portfolio <atimangojoan85@gmail.com>"
+
+# Production (Gmail needs an App Password):
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_HOST = "smtp.gmail.com"
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = "atimangojoan85@gmail.com"
+# EMAIL_HOST_PASSWORD = os.environ["EMAIL_APP_PASSWORD"]
+
+# --- portfolio contact email ---
+# Real email is switched on when the EMAIL_APP_PASSWORD environment variable is set.
+# Otherwise emails just print in the terminal that runs the server.
+import os
+
+DEFAULT_FROM_EMAIL = "Portfolio <atimangojoan85@gmail.com>"
+if os.environ.get("EMAIL_APP_PASSWORD"):
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_HOST = "smtp.gmail.com"
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    EMAIL_HOST_USER = "atimangojoan85@gmail.com"
+    EMAIL_HOST_PASSWORD = os.environ["EMAIL_APP_PASSWORD"]
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

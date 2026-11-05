@@ -1,54 +1,71 @@
-from django.shortcuts import render,redirect
-from django.core.mail import send_mail
-from django.contrib import messages
-from django.conf import settings
+import logging
 
-# Create your views here.
-def home(request):
-    return render(request, 'home.html')
+from django.conf import settings
+from django.contrib import messages
+from django.core.exceptions import ValidationError
+from django.core.mail import EmailMessage
+from django.core.validators import validate_email
+from django.http import JsonResponse
+from django.shortcuts import redirect, render
+
+from .models import ContactMessage
+
+logger = logging.getLogger(__name__)
+
+CONTACT_RECIPIENT = "atimangojoan85@gmail.com"
+THANKS = "Thank you! Your message was received. I'll get back to you soon."
+
+
+def _reply(request, ok, text):
+    """JSON for the page's fetch() call, or a normal redirect if JavaScript is off."""
+    if request.headers.get("x-requested-with") == "XMLHttpRequest":
+        return JsonResponse({"ok": ok, "message": text}, status=200 if ok else 400)
+    (messages.success if ok else messages.error)(request, text)
+    return redirect(f"{request.path}#contact")
 
 
 def portfolio_home(request):
     if request.method == "POST":
-        # Extract and strip whitespace from form fields
-        name = request.POST.get('name', '').strip()
-        sender_email = request.POST.get('email', '').strip()
-        message_body = request.POST.get('message', '').strip()
-        
-        # Simple validation block to prevent sending empty emails
-        if not name or not sender_email or not message_body:
-            messages.error(request, "Please fill in all required fields.")
-            return redirect('/#contact')
-        
-        # Format the email layout cleanly
-        email_subject = f"💼 New Portfolio Inquiry from {name}"
-        email_message = (
-            f"You received a new message from your portfolio website contact form:\n\n"
-            f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-            f"Sender Name:  {name}\n"
-            f"Sender Email: {sender_email}\n"
-            f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-            f"Message:\n"
-            f"{message_body}\n"
-        )
-        
-        try:
-            # Trigger the Django email dispatch
-            send_mail(
-                subject=email_subject,
-                message=email_message,
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=['atimangojoan85@gmail.com'],  # Your destination inbox
-                fail_silently=False,
-            )
-            # Adds a standard 'success' tag to Django's messages framework
-            messages.success(request, "Your message has been sent successfully! I will get back to you soon.")
-        except Exception as e:
-            # Adds an 'error' tag if email server fails (e.g., bad SMTP configuration)
-            messages.error(request, "Oops! Something went wrong while sending your message. Please try again later.")
-            # Optional: print(f"Mail Server Error: {e}") for local terminal debugging
-            
-        return redirect('/#contact')  # Redirects back to the contact anchor section
+        # Honeypot: bots fill this hidden field, people never see it
+        if request.POST.get("website"):
+            return _reply(request, True, THANKS)
 
-    # If GET request, just render the normal portfolio landing page
-    return render(request, 'index.html')
+        name = request.POST.get("name", "").strip()[:100]
+        email = request.POST.get("email", "").strip()[:150]
+        subject = request.POST.get("subject", "").strip()[:150]
+        body = request.POST.get("message", "").strip()[:3000]
+
+        try:
+            validate_email(email)
+        except ValidationError:
+            return _reply(request, False, "Please enter a valid email address.")
+
+        if not (name and body):
+            return _reply(request, False, "Please fill in your name and message.")
+
+        # 1) Always keep the message (visible in /admin/), so nothing is lost
+        entry = ContactMessage.objects.create(
+            name=name, email=email, subject=subject, message=body
+        )
+
+        # 2) Then try to email it; a failure is logged in the terminal, not shown to visitors
+        try:
+            EmailMessage(
+                subject=f"[Portfolio] {subject or 'New message'}",
+                body=f"From: {name} <{email}>\n\n{body}",
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                to=[CONTACT_RECIPIENT],
+                reply_to=[email],
+            ).send(fail_silently=False)
+            entry.emailed = True
+            entry.save(update_fields=["emailed"])
+        except Exception:
+            logger.exception("Contact form: saved the message but the email could not be sent")
+
+        return _reply(request, True, THANKS)
+
+    return render(request, "home.html")
+
+
+# urls.py in this project uses both names for the same page
+home = portfolio_home
